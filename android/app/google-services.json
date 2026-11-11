@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "496163550786",
+    "firebase_url": "https://personal-expense-tracker-2b12c-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "personal-expense-tracker-2b12c",
+    "storage_bucket": "personal-expense-tracker-2b12c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496163550786:android:02a7ec7dfdde840c1c5fdb",
+        "android_client_info": {
+          "package_name": "com.example.pet_gtbiluan_acandrade"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKKx2mIXvlNCuR8NZ3U5Wscz9ADo583U0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
