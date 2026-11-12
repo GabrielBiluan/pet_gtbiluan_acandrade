@@ -1,5 +1,7 @@
-# Task Tracking - Reduce App to 50%
+# Task Tracking - Align with Reference UI (4 Tabs + Month Navigation)
 
-- [x] Simplify navigation and UI to core 50% features (Auth + Home Expense List + Add Expense)
-- [x] Remove extraneous code/tabs
-- [x] Verify functionality and test with `flutter analyze`
+- [x] Implement Settings Screen (Tab 4)
+- [x] Update Spending Screen with Month navigation header ("November" `< >`) and filters
+- [x] Update Transactions Screen with Month navigation header and reference actions (`Sort`, `Export`)
+- [x] Update Main Container Screen for 4 bottom tabs (`Spending`, `Transactions`, `Categories`, `Settings`)
+- [x] Verify build and test with `flutter analyze`
