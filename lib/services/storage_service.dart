@@ -9,13 +9,13 @@ class StorageService {
       String fileName = 'receipts/${userId}_${DateTime.now().millisecondsSinceEpoch}.jpg';
       Reference ref = _storage.ref().child(fileName);
       
-      // Free plan optimization: compression/metadata can be handled or direct upload
       UploadTask uploadTask = ref.putFile(imageFile);
-      TaskSnapshot snapshot = await uploadTask;
+      TaskSnapshot snapshot = await uploadTask.timeout(const Duration(seconds: 5));
       String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
-      rethrow;
+      // Return empty string on upload failure or timeout so save expense proceeds
+      return '';
     }
   }
 }

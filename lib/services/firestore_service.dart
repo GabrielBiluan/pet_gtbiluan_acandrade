@@ -18,15 +18,28 @@ class FirestoreService {
   }
 
   Future<void> addExpense(Expense expense) async {
-    await _db.collection('expenses').doc(expense.id).set(expense.toMap());
+    // Local cache is updated instantly; timeout handles server ACK delays gracefully
+    await _db
+        .collection('expenses')
+        .doc(expense.id)
+        .set(expense.toMap())
+        .timeout(const Duration(seconds: 2), onTimeout: () {});
   }
 
   Future<void> updateExpense(Expense expense) async {
-    await _db.collection('expenses').doc(expense.id).update(expense.toMap());
+    await _db
+        .collection('expenses')
+        .doc(expense.id)
+        .update(expense.toMap())
+        .timeout(const Duration(seconds: 2), onTimeout: () {});
   }
 
   Future<void> deleteExpense(String expenseId) async {
-    await _db.collection('expenses').doc(expenseId).delete();
+    await _db
+        .collection('expenses')
+        .doc(expenseId)
+        .delete()
+        .timeout(const Duration(seconds: 2), onTimeout: () {});
   }
 
   // Categories Stream & CRUD
@@ -41,10 +54,18 @@ class FirestoreService {
   }
 
   Future<void> addCategory(CategoryModel category) async {
-    await _db.collection('categories').doc(category.id).set(category.toMap());
+    await _db
+        .collection('categories')
+        .doc(category.id)
+        .set(category.toMap())
+        .timeout(const Duration(seconds: 2), onTimeout: () {});
   }
 
   Future<void> deleteCategory(String categoryId) async {
-    await _db.collection('categories').doc(categoryId).delete();
+    await _db
+        .collection('categories')
+        .doc(categoryId)
+        .delete()
+        .timeout(const Duration(seconds: 2), onTimeout: () {});
   }
 }

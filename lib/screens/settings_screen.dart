@@ -34,15 +34,9 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.palette, color: Color(0xFF0B10C0)),
-                  title: const Text('Color Palette'),
-                  subtitle: const Text('#0B10C0, #CFD0FC, #55AC53, #5EC58F'),
-                ),
-                const Divider(height: 1),
-                ListTile(
                   leading: const Icon(Icons.info, color: Color(0xFF0B10C0)),
                   title: const Text('App Version'),
-                  subtitle: const Text('1.0.0+1 (Final Project)'),
+                  subtitle: const Text('1.0.0 (Final Project)'),
                 ),
               ],
             ),

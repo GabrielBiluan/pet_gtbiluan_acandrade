@@ -50,16 +50,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             icon: const Icon(Icons.sort, size: 18),
             label: const Text('Sort'),
           ),
-          TextButton.icon(
-            style: TextButton.styleFrom(foregroundColor: const Color(0xFF0B10C0)),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Transactions exported successfully!'), backgroundColor: Color(0xFF55AC53)),
-              );
-            },
-            icon: const Icon(Icons.download, size: 18),
-            label: const Text('Export'),
-          ),
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
