@@ -17,6 +17,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   final User? user = FirebaseAuth.instance.currentUser;
   String _searchQuery = '';
   DateTime _selectedDate = DateTime.now();
+  String _sortOption = 'Newest first';
 
   void _previousMonth() {
     setState(() {
@@ -27,6 +28,35 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   void _nextMonth() {
     setState(() {
       _selectedDate = DateTime(_selectedDate.year, _selectedDate.month + 1, _selectedDate.day);
+    });
+  }
+
+  void _showSortMenu(BuildContext context) {
+    showMenu<String>(
+      context: context,
+      position: const RelativeRect.fromLTRB(100, 100, 100, 100),
+      items: [
+        'Newest first',
+        'Oldest first',
+        'Highest amount',
+        'Lowest amount',
+        'Title (A-Z)',
+      ].map((option) {
+        return PopupMenuItem<String>(
+          value: option,
+          child: Row(
+            children: [
+              if (_sortOption == option) const Icon(Icons.check, size: 16, color: Color(0xFF0B10C0)),
+              if (_sortOption == option) const SizedBox(width: 8),
+              Text(option, style: TextStyle(fontWeight: _sortOption == option ? FontWeight.bold : FontWeight.normal)),
+            ],
+          ),
+        );
+      }).toList(),
+    ).then((selected) {
+      if (selected != null) {
+        setState(() => _sortOption = selected);
+      }
     });
   }
 
@@ -42,13 +72,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         actions: [
           TextButton.icon(
             style: TextButton.styleFrom(foregroundColor: const Color(0xFF0B10C0)),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Transactions sorted by date (newest first).')),
-              );
-            },
+            onPressed: () => _showSortMenu(context),
             icon: const Icon(Icons.sort, size: 18),
-            label: const Text('Sort'),
+            label: Text(_sortOption),
           ),
         ],
         bottom: PreferredSize(
@@ -118,6 +144,22 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   return matchesMonth && matchesSearch;
                 }).toList();
 
+                // Sort expenses based on selected sort option
+                expenses.sort((a, b) {
+                  if (_sortOption == 'Newest first') {
+                    return b.date.compareTo(a.date);
+                  } else if (_sortOption == 'Oldest first') {
+                    return a.date.compareTo(b.date);
+                  } else if (_sortOption == 'Highest amount') {
+                    return b.amount.compareTo(a.amount);
+                  } else if (_sortOption == 'Lowest amount') {
+                    return a.amount.compareTo(b.amount);
+                  } else if (_sortOption == 'Title (A-Z)') {
+                    return a.title.compareTo(b.title);
+                  }
+                  return 0;
+                });
+
                 if (expenses.isEmpty) {
                   return const Center(child: Text('No transactions for this month.'));
                 }
@@ -134,9 +176,19 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                           child: const Icon(Icons.restaurant, color: Color(0xFF0B10C0)),
                         ),
                         title: Text(expense.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text(
-                          '${expense.category} • ${DateFormat('EEEE, dd MMM yyyy').format(expense.date)}',
-                          style: const TextStyle(fontSize: 12),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${expense.category} • ${DateFormat('EEE, dd MMM yyyy').format(expense.date)}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            if (expense.note.isNotEmpty)
+                              Text(
+                                'Note: ${expense.note}',
+                                style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey),
+                              ),
+                          ],
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,

@@ -1,7 +1,5 @@
-# Task Tracking - Align with Reference UI (4 Tabs + Month Navigation)
+# Task Tracking - Comment Cleanup
 
-- [x] Implement Settings Screen (Tab 4)
-- [x] Update Spending Screen with Month navigation header ("November" `< >`) and filters
-- [x] Update Transactions Screen with Month navigation header and reference actions (`Sort`, `Export`)
-- [x] Update Main Container Screen for 4 bottom tabs (`Spending`, `Transactions`, `Categories`, `Settings`)
+- [x] Clean comments in models and services
+- [x] Clean comments in screens and main.dart
 - [x] Verify build and test with `flutter analyze`

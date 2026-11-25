@@ -1,11 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/expense.dart';
 import '../models/category_model.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instanceFor(
+    app: Firebase.app(),
+    databaseId: 'personal-expense-tracker-db',
+  );
 
-  // Expenses Stream & CRUD
   Stream<List<Expense>> getExpenses(String userId) {
     return _db
         .collection('expenses')
@@ -18,7 +21,6 @@ class FirestoreService {
   }
 
   Future<void> addExpense(Expense expense) async {
-    // Local cache is updated instantly; timeout handles server ACK delays gracefully
     await _db
         .collection('expenses')
         .doc(expense.id)
@@ -42,7 +44,6 @@ class FirestoreService {
         .timeout(const Duration(seconds: 2), onTimeout: () {});
   }
 
-  // Categories Stream & CRUD
   Stream<List<CategoryModel>> getCategories(String userId) {
     return _db
         .collection('categories')

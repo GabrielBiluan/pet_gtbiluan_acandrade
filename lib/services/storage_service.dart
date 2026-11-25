@@ -14,7 +14,6 @@ class StorageService {
       String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
-      // Return empty string on upload failure or timeout so save expense proceeds
       return '';
     }
   }

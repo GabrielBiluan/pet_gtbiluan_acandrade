@@ -16,7 +16,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   final User? user = FirebaseAuth.instance.currentUser;
   
-  String _filterMode = 'Monthly'; // Daily, Weekly, Monthly, Yearly
+  String _filterMode = 'Monthly';
   DateTime _selectedDate = DateTime.now();
 
   void _previousPeriod() {
@@ -131,7 +131,6 @@ class _SpendingScreenState extends State<SpendingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Month / Period Navigation Header matching reference UI
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
